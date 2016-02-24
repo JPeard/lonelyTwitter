@@ -9,9 +9,12 @@ import com.searchly.jestdroid.JestDroidClient;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.searchbox.core.DocumentResult;
 import io.searchbox.core.Index;
+import io.searchbox.core.Search;
+import io.searchbox.core.SearchResult;
 
 /**
  * Created by esports on 2/17/16.
@@ -20,17 +23,46 @@ public class ElasticsearchTweetController {
     private static JestDroidClient client;
 
     //TODO: A function that gets tweets
-    public static class GetTweetsTask extends AsyncTask<String, Void, ArrayList<NormalTweet>>{
-        protected ArrayList<NormalTweet> doInBackground(String... strings){
+    public static class GetTweetsTask extends AsyncTask<String, Void, ArrayList<Tweet>>{
+        @Override
+        protected ArrayList<Tweet> doInBackground(String... search_strings){
             verifyClient();
+            String search_s;
 
+            // Start our initial arraylist
+            ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 
-            return null;
+            if(search_strings[0] != "") {
+                search_s = "{\"size\":1000,\"query\":{\"match\":{\"message\":\"" + search_strings[0] + "\"}}}";
+            }else{
+                search_s = "{\"size\":1000}";
+            }
+
+            Search search = new Search.Builder(search_s).addIndex("testing").addType("tweet").build();
+
+            try{
+                SearchResult execute = client.execute(search);
+
+                if(execute.isSucceeded()){
+                    // Return our list of tweets
+                    List<NormalTweet> returned = execute.getSourceAsObjectList(NormalTweet.class);
+                    tweets.addAll(returned);
+                } else{
+                    //TODO: Add an error message
+                    Log.i("TODO","We actually failed here, adding a tweet");
+                }
+
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+            return tweets;
         }
     }
 
     //TODO: A function that adds a tweet
     public static class AddTweetTask extends AsyncTask<NormalTweet, Void, Void>{
+        @Override
         protected Void doInBackground(NormalTweet... tweets){
             verifyClient();
 
