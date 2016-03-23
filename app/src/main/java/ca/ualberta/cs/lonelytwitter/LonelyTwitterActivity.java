@@ -24,8 +24,6 @@ public class LonelyTwitterActivity extends Activity {
     private ArrayList<Tweet> tweets;
     private ArrayAdapter<Tweet> adapter;
 
-    private Button saveButton;
-
     public ArrayAdapter<Tweet> getAdapter() {
         return adapter;
     }
@@ -59,14 +57,17 @@ public class LonelyTwitterActivity extends Activity {
             }
         });
 
-        saveButton = (Button) findViewById(R.id.saveButton);
+        /*
+        Made saveButton a local variable
+         */
+        Button saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 String text = bodyText.getText().toString();
                 NormalTweet latestTweet = new NormalTweet(text);
 
-                myTweets.add(latestTweet);
+                myTweets.addNewTweet(latestTweet);
 
                 latestTweet.addThumbnail(thumbnail);
                 adapter.insert(latestTweet, 0);
@@ -105,14 +106,7 @@ public class LonelyTwitterActivity extends Activity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
-        //Count important tweets
-        numImportant = 0;
-        for ( Tweet aTweet: myTweets.getTweets() ){
-            if (aTweet.isImportant() == Boolean.TRUE){
-                numImportant++;
-            }
-        }
+        numImportant = myTweets.countImportant();
 
 //        adapter = new ArrayAdapter<Tweet>(this, R.layout.list_item, tweets);
         // Binds tweet list with view, so when our array updates, the view updates with it

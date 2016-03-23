@@ -5,7 +5,6 @@ import android.app.Instrumentation;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.UiThreadTest;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 
 /**
@@ -32,7 +31,10 @@ public class LonelyTwitterActivityUITest extends ActivityInstrumentationTestCase
     private void makeTweet(String text) {
         assertNotNull(activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.saveButton));
         textInput.setText(text);
-        ((Button) activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.saveButton)).performClick();
+        /*
+        Removing redundant cast to 'Button'
+         */
+        activity.findViewById(R.id.saveButton).performClick();
     }
 
     @UiThreadTest
@@ -44,8 +46,12 @@ public class LonelyTwitterActivityUITest extends ActivityInstrumentationTestCase
         ArrayAdapter<Tweet> arrayAdapter = lta.getAdapter();
         assertEquals(oldLength + 1, arrayAdapter.getCount());
 
+        /*
+        Replaced redundant arrayAdapter.getItem(arrayAdapter.getCount() - 1) instanceof Tweet
+        with != null
+         */
         assertTrue("Did you add a Tweet object?",
-                arrayAdapter.getItem(arrayAdapter.getCount() - 1) instanceof Tweet);
+                arrayAdapter.getItem(arrayAdapter.getCount() - 1) != null);
 
         Tweet tweet = arrayAdapter.getItem(arrayAdapter.getCount() - 1);
         assertEquals("This is not the text we expected!", tweet.getMessage(),

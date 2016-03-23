@@ -4,12 +4,14 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
 
-import com.google.gson.Gson;
-
 import java.io.ByteArrayOutputStream;
 import java.util.Date;
 
 import io.searchbox.annotations.JestId;
+
+/*
+Removed unused Gson import
+ */
 
 public abstract class Tweet {
     @JestId
