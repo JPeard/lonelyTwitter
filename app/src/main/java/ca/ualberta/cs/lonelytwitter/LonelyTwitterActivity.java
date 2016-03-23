@@ -58,7 +58,7 @@ public class LonelyTwitterActivity extends Activity {
         });
 
         /*
-        Made saveButton a local variable
+        Made saveButton a local variable [Only used here, made code more readable]
          */
         Button saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {

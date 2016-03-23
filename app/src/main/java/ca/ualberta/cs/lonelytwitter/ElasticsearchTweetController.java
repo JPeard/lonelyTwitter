@@ -46,7 +46,7 @@ public class ElasticsearchTweetController {
             /* NEW! */
             String search_string;
             /*
-                Changing == to equals() for string comparison
+                Changing == to equals() for string comparison [possible bugs]
             */
             if(params[0].equals("")) {
                 search_string = "{\"from\":0,\"size\":10000, \"sort\": {\"date\": {\"order\": \"desc\"}}}";

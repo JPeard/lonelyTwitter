@@ -32,7 +32,7 @@ public class LonelyTwitterActivityUITest extends ActivityInstrumentationTestCase
         assertNotNull(activity.findViewById(ca.ualberta.cs.lonelytwitter.R.id.saveButton));
         textInput.setText(text);
         /*
-        Removing redundant cast to 'Button'
+        Removing redundant cast to 'Button' [removing redundancy]
          */
         activity.findViewById(R.id.saveButton).performClick();
     }
@@ -48,7 +48,7 @@ public class LonelyTwitterActivityUITest extends ActivityInstrumentationTestCase
 
         /*
         Replaced redundant arrayAdapter.getItem(arrayAdapter.getCount() - 1) instanceof Tweet
-        with != null
+        with != null [removing redundancy]
          */
         assertTrue("Did you add a Tweet object?",
                 arrayAdapter.getItem(arrayAdapter.getCount() - 1) != null);

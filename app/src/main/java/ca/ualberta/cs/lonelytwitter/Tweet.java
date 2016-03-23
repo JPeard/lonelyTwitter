@@ -10,7 +10,7 @@ import java.util.Date;
 import io.searchbox.annotations.JestId;
 
 /*
-Removed unused Gson import
+Removed unused Gson import [Improving readability]
  */
 
 public abstract class Tweet {
